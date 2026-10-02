@@ -417,3 +417,48 @@ if (personIndex && !personIndex.querySelector('a[href="thought-map.html"]')) {
   mapLink.textContent = '在思想演变地图中定位这个人物 →';
   personIndex.appendChild(mapLink);
 }
+
+const personVisuals = {
+  'person-fox.html': {
+    kind: 'image',
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Supposed_portrait_of_George_Fox,_1677.png?width=520',
+    alt: '1677年被认为描绘 George Fox 的同时代图像',
+    caption: '1677 同时代图像 · Wikimedia Commons / Public Domain'
+  },
+  'person-barclay.html': {
+    kind: 'image',
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Barclay-Apologie-1797-Title_page.jpg?width=520',
+    alt: 'Robert Barclay《Apology》1797年版本扉页',
+    caption: '《Apology》1797 版扉页 · Wikimedia Commons / Public Domain'
+  },
+  'person-woolman.html': {
+    kind: 'image',
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/John_Woolman.jpg?width=520',
+    alt: 'John Woolman 肖像',
+    caption: 'John Woolman 肖像 · Wikimedia Commons'
+  },
+  'person-rufus-jones.html': {
+    kind: 'image',
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Portrait_of_Rufus_Matthew_Jones_(Date_Unknown).jpg?width=520',
+    alt: 'Rufus Matthew Jones 肖像',
+    caption: 'Rufus Jones 肖像 · Wikimedia Commons'
+  },
+  'person-thomas-kelly.html': { kind: 'kelly' },
+  'person-parker-palmer.html': { kind: 'palmer' }
+};
+
+const currentPage = location.pathname.split('/').pop() || 'index.html';
+const personVisual = personVisuals[currentPage];
+if (personIndex && personVisual && !personIndex.querySelector('.person-visual-card')) {
+  const figure = document.createElement('figure');
+  figure.className = 'person-visual-card';
+  if (personVisual.kind === 'image') {
+    figure.innerHTML = `<img loading="lazy" src="${personVisual.src}" alt="${personVisual.alt}"><figcaption>${personVisual.caption}</figcaption>`;
+  } else if (personVisual.kind === 'kelly') {
+    figure.innerHTML = `<div class="person-concept-art kelly-art" aria-label="Thomas Kelly 双层注意概念图"><span class="outer-label">工作 · 谈话 · 行动</span><span class="inner-label">深层<br>敬拜</span></div><figcaption>Kelly：外层处理现实，深层持续归向 Divine Center</figcaption>`;
+  } else {
+    figure.innerHTML = `<div class="person-concept-art palmer-art" aria-label="Parker Palmer 信任圈与第三物概念图"><i></i><i></i><i></i><i></i><i></i><span>第三物<br><small>共同中心</small></span></div><figcaption>Palmer：不是直奔彼此，而是围绕第三物形成共同中心</figcaption>`;
+  }
+  const firstLink = personIndex.querySelector('a');
+  personIndex.insertBefore(figure, firstLink || null);
+}
