@@ -14,6 +14,152 @@ nav?.querySelectorAll('a').forEach((link) => {
   });
 });
 
+// Keep Chinese display headings from breaking inside meaningful words.
+// Native phrase-aware wrapping is useful but still permits awkward splits
+// such as “不 / 只是” or “贵 / 格会” in some layouts, so headings get a
+// small progressive enhancement based on Intl.Segmenter.
+const headingSegmenter = typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function'
+  ? new Intl.Segmenter('zh-CN', { granularity: 'word' })
+  : null;
+const headingPrefixWords = new Set([
+  '不','更','而','但','并','被','把','在','从','向','为','让','使',
+  '对','由','比','再','才','也','仍','还','与','和','及','或',
+  '并不','因为','所以','如果','虽然','但是','而是','不是','不只是',
+  '不是因为','需要被','不是被','而是在','继续对',
+  '以及','然后','其中','怎样','如何','为什么','什么','可以','能够',
+  '不能','需要','应该','可能','仍然','继续','重新','开始','成为',
+  '属于','进入','来自'
+]);
+const headingSuffixWords = new Set(['的','地','得']);
+const headingClosingPunctuation = /^[，。；：、？！）》】”’…,.!?;:]+$/;
+const headingOpeningPunctuation = /^[（【《“‘]+$/;
+
+function protectHeadingTextNode(node) {
+  if (!headingSegmenter || !node?.data?.trim()) return;
+
+  const parts = [...headingSegmenter.segment(node.data)].map((part) => ({
+    text: part.segment,
+    word: Boolean(part.isWordLike)
+  }));
+
+  if (!parts.some((part) => part.word && part.text.trim().length > 1)) return;
+
+  const units = [];
+  for (let i = 0; i < parts.length; i += 1) {
+    const part = parts[i];
+
+    if (!part.word) {
+      const trimmed = part.text.trim();
+
+      if (trimmed && headingClosingPunctuation.test(trimmed) && units.length) {
+        const previous = units[units.length - 1];
+        if (previous.protect) {
+          previous.text += part.text;
+          continue;
+        }
+      }
+
+      if (trimmed && headingOpeningPunctuation.test(trimmed)) {
+        let next = i + 1;
+        let text = part.text;
+
+        while (next < parts.length && !parts[next].word && /^\s+$/.test(parts[next].text)) {
+          text += parts[next].text;
+          next += 1;
+        }
+
+        if (next < parts.length && parts[next].word) {
+          let nextWord = parts[next].text;
+          text += nextWord;
+          i = next;
+
+          while (headingPrefixWords.has(nextWord)) {
+            let after = i + 1;
+            let bridge = '';
+
+            while (
+              after < parts.length &&
+              !parts[after].word &&
+              (/^\s+$/.test(parts[after].text) || headingOpeningPunctuation.test(parts[after].text.trim()))
+            ) {
+              bridge += parts[after].text;
+              after += 1;
+            }
+
+            if (after >= parts.length || !parts[after].word) break;
+
+            nextWord = parts[after].text;
+            text += bridge + nextWord;
+            i = after;
+          }
+
+          units.push({ text, protect: true });
+          continue;
+        }
+      }
+
+      units.push({ text: part.text, protect: false });
+      continue;
+    }
+
+    if (headingSuffixWords.has(part.text) && units.length) {
+      const previous = units[units.length - 1];
+      if (previous.protect && !/[\s，。；：、？！）》】]$/.test(previous.text)) {
+        previous.text += part.text;
+        continue;
+      }
+    }
+
+    let text = part.text;
+    let keepJoining = headingPrefixWords.has(part.text);
+
+    while (keepJoining) {
+      let next = i + 1;
+      let bridge = '';
+
+      while (
+        next < parts.length &&
+        !parts[next].word &&
+        (/^\s+$/.test(parts[next].text) || headingOpeningPunctuation.test(parts[next].text.trim()))
+      ) {
+        bridge += parts[next].text;
+        next += 1;
+      }
+
+      if (next >= parts.length || !parts[next].word) break;
+
+      const nextWord = parts[next].text;
+      text += bridge + nextWord;
+      i = next;
+      keepJoining = headingPrefixWords.has(nextWord);
+    }
+
+    units.push({ text, protect: text.trim().length > 1 });
+  }
+
+  const fragment = document.createDocumentFragment();
+  units.forEach((unit) => {
+    if (!unit.protect) {
+      fragment.append(document.createTextNode(unit.text));
+      return;
+    }
+    const span = document.createElement('span');
+    span.className = 'heading-word';
+    span.textContent = unit.text;
+    fragment.append(span);
+  });
+  node.replaceWith(fragment);
+}
+
+if (headingSegmenter) {
+  document.querySelectorAll('h1,h2').forEach((heading) => {
+    const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(protectHeadingTextNode);
+  });
+}
+
 document.querySelectorAll('[data-tabs]').forEach((tabs) => {
   const tabButtons = [...tabs.querySelectorAll('[role="tab"]')];
   const panels = [...tabs.querySelectorAll('[role="tabpanel"]')];
