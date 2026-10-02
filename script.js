@@ -151,12 +151,45 @@ function protectHeadingTextNode(node) {
   node.replaceWith(fragment);
 }
 
+function protectHeadingElement(heading) {
+  if (!headingSegmenter || !heading) return;
+  const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (node.parentElement?.closest('.heading-word')) continue;
+    textNodes.push(node);
+  }
+  textNodes.forEach(protectHeadingTextNode);
+}
+
 if (headingSegmenter) {
-  document.querySelectorAll('h1,h2').forEach((heading) => {
-    const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
-    const textNodes = [];
-    while (walker.nextNode()) textNodes.push(walker.currentNode);
-    textNodes.forEach(protectHeadingTextNode);
+  document.querySelectorAll('h1,h2,h3').forEach(protectHeadingElement);
+
+  const headingObserver = new MutationObserver((mutations) => {
+    const headings = new Set();
+
+    mutations.forEach((mutation) => {
+      const target = mutation.target.nodeType === Node.TEXT_NODE
+        ? mutation.target.parentElement
+        : mutation.target;
+      const parentHeading = target?.closest?.('h1,h2,h3');
+      if (parentHeading) headings.add(parentHeading);
+
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType !== Node.ELEMENT_NODE) return;
+        if (node.matches?.('h1,h2,h3')) headings.add(node);
+        node.querySelectorAll?.('h1,h2,h3').forEach((heading) => headings.add(heading));
+      });
+    });
+
+    headings.forEach(protectHeadingElement);
+  });
+
+  headingObserver.observe(document.body, {
+    subtree: true,
+    childList: true,
+    characterData: true
   });
 }
 
@@ -245,18 +278,18 @@ const conceptContent = {
   },
   revelation: {
     kicker: 'SOURCE',
-    title: '即时启示',
-    body: '贵格会坚持，产生圣经的同一圣灵并没有停止工作。启示因此不是只属于过去，但这也不意味着任何强烈感受都自动成为神圣启示。',
+    title: '直接启示',
+    body: '这里的“直接”首先指圣灵可以直接触及和引导人，并不必须由传统、经文或理性作中介；而“产生圣经的同一圣灵今天仍然工作”，则属于持续启示的含义。两者相关，但不能混成“我一有强烈感觉，就是神在说话”。',
     links: [
-      ['它保护什么？', '信仰的活性：真理必须在当下成为可经验的现实。'],
-      ['它需要什么？', '辨识与检验，而不是“新奇”本身。'],
+      ['直接启示', '强调神圣引导能够直接临到人，而不是“立刻得到答案”。'],
+      ['持续启示', '强调启示没有封闭在过去；同一圣灵今天仍然工作。'],
       ['失衡风险', '把个人冲动神圣化。']
     ]
   },
   christ: {
     kicker: 'CHRISTOLOGY',
     title: '基督',
-    body: '早期 Friends 常把内在之光、基督之光与内在基督联系起来。19世纪分裂以后，“历史中的基督”与“内在基督”被不同分支赋予不同权重。',
+    body: '早期 Friends 常把内在之光、基督之光与内在基督联系起来。19世纪分裂以后，不同分支对“历史中的基督”与“内在基督”的强调程度逐渐出现差异。',
     links: [
       ['早期结构', '历史中的基督与内在基督并非两个互不相关的对象。'],
       ['现代张力', '基督中心解释与更普遍主义的“光”语言并存。'],
@@ -278,7 +311,7 @@ const conceptContent = {
     title: '敬拜',
     body: '静默敬拜把神学变成身体与群体的实践：不预先制造内容，而是共同等待，辨认是否有话或行动被要求。',
     links: [
-      ['静默的功能', '从自我生产答案转向接受与等待。'],
+      ['静默的功能', '从急着想出答案，转向聆听与等候。'],
       ['口头服事', '任何人都可能说，但不是每个想法都该说。'],
       ['失衡风险', '把静默变成放松技术或个人冥想。']
     ]
@@ -289,14 +322,14 @@ const conceptContent = {
     body: '因为人的内在并不只有一个声音，贵格会需要区分恐惧、欲望、自我意志、社会期待与更深的引导。辨识因此是“内在之光”不可缺少的另一半。',
     links: [
       ['个人层面', '等待、祈祷、时间与内在和平。'],
-      ['群体层面', '开放问题、共同体回应与 unity。'],
+      ['群体层面', '开放问题、共同体回应与合一（unity）。'],
       ['失衡风险', '把“真诚”误当作“正确”。']
     ]
   },
   community: {
     kicker: 'TESTING GROUND',
     title: '共同体',
-    body: '贵格会的“内在”不是孤立个人主义。Meeting 让个人领受进入公共检验；unity 也不是要求所有人变得一样，而是寻找一个群体能够共同承担的方向。',
+    body: '贵格会的“内在”不是孤立个人主义。Meeting 让个人领受进入公共检验；合一（unity）也不是要求所有人变得一样，而是寻找一个群体能够共同承担的方向。',
     links: [
       ['核心实践', '敬拜式事务聚会、澄心会、Queries。'],
       ['它限制谁？', '既限制个人任性，也限制职位垄断。'],
@@ -308,7 +341,7 @@ const conceptContent = {
     title: '见证',
     body: '和平、诚信、简朴、平等之所以重要，不是因为它们是一套品牌价值观，而是因为它们被理解为内在生命在公共世界中反复结出的果子。',
     links: [
-      ['从哪里来？', '敬拜中形成的 concern 与对现实的敏感。'],
+      ['从哪里来？', '敬拜中逐渐形成的属灵关切（concern），以及对现实更敏锐的回应。'],
       ['如何验证？', '生活是否真的发生改变，行动是否能被共同体承担。'],
       ['失衡风险', '把社会行动与灵性根基完全分开。']
     ]
@@ -415,7 +448,7 @@ const thoughtPeople = {
   barclay: {
     kicker: '1648–1690 · SYSTEMATIC EXPRESSION',
     title: 'Robert Barclay：让“活的经验”接受一套可以公开辩论的神学语言',
-    inherit: 'Fox 与早期 Friends 对即时启示、内在基督、等待式敬拜的经验。',
+    inherit: 'Fox 与早期 Friends 对直接启示、内在基督、等待式敬拜的经验。',
     shift: '把经验组织成关于启示、圣经、普遍救恩、称义、完全、服事与敬拜的十五命题。',
     today: '提醒现代读者：Quaker experience 不是“感觉主义”，它从一开始就有权威、检验与神学边界问题。',
     href: 'person-barclay.html', link: '进入 Robert Barclay 人物专题 →'
@@ -440,7 +473,7 @@ const thoughtPeople = {
     kicker: '1893–1941 · THE INWARD CENTER',
     title: 'Thomas Kelly：把“内在中心”从聚会时刻带进普通工作日',
     inherit: 'Jones 的内在宗教关怀，以及 Friends 持续敬拜、等待与顺服的传统。',
-    shift: '强调内在圣所、双层注意与持续祈祷：外层处理事务，深层仍保持敬拜与接受。',
+    shift: '强调内在圣所、两层心智生活与持续祈祷：一面处理日常事务，一面在更深处保持敬拜与聆听。',
     today: '灵修不必等待退修或特殊状态；成熟更像“忘记后越来越快地回来”，并由此产生更深的世界关切。',
     href: 'person-thomas-kelly.html', link: '进入 Thomas Kelly 人物专题 →'
   },
@@ -448,8 +481,8 @@ const thoughtPeople = {
     kicker: '1939– · COMMUNITY AS A CONTAINER',
     title: 'Parker Palmer：把“内在老师”放进一个不急着干预人的群体结构',
     inherit: 'Quaker meeting、静默、内在老师，以及 Kelly 所强调的更深中心。',
-    shift: '发展第三物、信任圈、clearness practice 与 meeting for learning，把传统转译到教育和群体带领。',
-    today: '群体的任务不是替人修理人生，而是设计条件，让一个人的内在声音有机会在关系与现实中变清楚。',
+    shift: '发展第三物、信任圈、clearness practice 与 meeting for learning，把这份传统重新表达在教育与群体带领中。',
+    today: '群体的任务不是替一个人解决人生，而是创造条件，让他在关系与现实中更清楚地听见自己的内在老师。',
     href: 'person-parker-palmer.html', link: '进入 Parker Palmer 人物专题 →'
   }
 };
@@ -490,7 +523,7 @@ const lensData = {
     ['Fox','基督之光','一种临到、照见并要求回应的真实经验。'],['Barclay','普遍救赎之光','所有人都领受一份可回应或抗拒的恩典。'],['Woolman','良知被照明','光不断触及生活中习以为常的不义。'],['Jones','内在宗教','强调神圣与人的直接关系及神秘经验。'],['Kelly','Divine Center','光成为可在日常深层持续归向的中心。'],['Palmer','Inner Teacher','群体不替人发光，而保护人聆听内在老师的条件。']
   ],
   christ: [
-    ['Fox','活的基督','“直接被基督教导”是经验核心。'],['Barclay','历史与内在','历史中的基督与当下内在工作属于同一救恩。'],['Woolman','跟随的尺度','基督的谦卑与和平进入生活方式。'],['Jones','语言被拓宽','现代解释更常把基督放进神秘主义与普遍宗教经验。'],['Kelly','内在圣所','明确把深层中心写成神圣临在主动工作的地方。'],['Palmer','语言转译','在教育文本中更常使用 Inner Teacher / truth 等开放语言。']
+    ['Fox','活的基督','“直接被基督教导”是经验核心。'],['Barclay','历史与内在','历史中的基督与当下内在工作属于同一救恩。'],['Woolman','跟随的尺度','基督的谦卑与和平进入生活方式。'],['Jones','语言被拓宽','现代解释更常把基督放进神秘主义与普遍宗教经验。'],['Kelly','内在圣所','明确把深层中心写成神圣临在主动工作的地方。'],['Palmer','语言重述','在教育文本中更常使用 Inner Teacher / truth 等开放语言。']
   ],
   scripture: [
     ['Fox','被圣灵打开','圣经重要，但需要同一圣灵使文字成为活的。'],['Barclay','次级规则','圣经忠实见证泉源，却不等于泉源本身。'],['Woolman','文本与生活互照','经文与内在不安一起推动伦理检验。'],['Jones','现代批判后重读','让 Quakerism 与现代圣经研究和宗教学对话。'],['Kelly','不以系统释经为中心','更多从祈祷、经验与新约意象进入。'],['Palmer','第三物之一','文本是共同中心，不是压过经验的裁判。']
@@ -502,7 +535,7 @@ const lensData = {
     ['Fox','真理必须被活出','见证始于言行一致和拒绝宗教/社会虚饰。'],['Barclay','生活纪律','神学延伸到良心、政权、礼仪与行为。'],['Woolman','最彻底的伦理化','奴隶制、消费与经济关系成为属灵问题。'],['Jones','服务与和平','现代 Quaker identity 更明确进入社会服务与和平工作。'],['Kelly','世界重新进入心中','深层退回不是逃世，而产生更深关切。'],['Palmer','公共生活与教育','完整的人回到制度和共同体，改变参与方式。']
   ],
   practice: [
-    ['Fox','等候与顺服','静默中等待，辨认是否被要求说或做。'],['Barclay','可检验的经验','让启示接受圣经、理性与共同体的检验。'],['Woolman','带着 concern 生活','不急着结论，而让不安改变具体选择。'],['Jones','内在阅读与祈祷','用现代语言重新进入传统的内在维度。'],['Kelly','双层注意','工作同时保持深层祈祷，忘记后再回来。'],['Palmer','第三物与开放问题','减少直接干预，让结构承托深听与辨识。']
+    ['Fox','等候与顺服','静默中等待，辨认是否被要求说或做。'],['Barclay','可检验的经验','让启示接受圣经、理性与共同体的检验。'],['Woolman','带着 concern 生活','不急着结论，而让不安改变具体选择。'],['Jones','内在阅读与祈祷','用现代语言重新进入传统的内在维度。'],['Kelly','两层心智生活','工作时仍保持深层祈祷，忘记后再回来。'],['Palmer','第三物与开放问题','减少直接干预，让结构承托深听与辨识。']
   ]
 };
 const lensLab = document.querySelector('[data-lens-lab]');
@@ -518,11 +551,11 @@ lensLab?.querySelectorAll('[data-lens]').forEach((button) => button.addEventList
 if (lensTrack) renderLens('light');
 
 const scenarioData = {
-  solo: { kicker:'SOLO · 10–30 分钟即可开始', title:'一个人：先建立“反复回到中心”的能力', body:'个人实践的目标不是制造特殊体验，而是让注意力有一个稳定返回点。静默、Journal 与 Queries 都可以很轻量，却会为后面的共同辨识建立基础。', tools:[['practice-silent-worship.html','静默 / 等候','10–20 分钟'],['practice-queries.html','Queries','带着一个问题生活'],['practice-silent-worship.html#daily','Journal','记录“什么让我更有生命 / 更收缩”']], boundary:'个人内省不能自动证明一个 leading 是真的；事情越重大，越需要时间、现实事实和共同体检验。' },
+  solo: { kicker:'SOLO · 10–30 分钟即可开始', title:'一个人：先建立“反复回到中心”的能力', body:'个人实践的目标不是制造特殊体验，而是让注意力有一个稳定返回点。静默、Journal 与 Queries 都可以很轻量，却会为后面的共同辨识建立基础。', tools:[['practice-silent-worship.html','静默 / 等候','10–20 分钟'],['practice-queries.html','Queries','带着一个问题生活'],['practice-silent-worship.html#daily','Journal','记录“什么让我更有生命 / 更收缩”']], boundary:'个人内省不能自动证明一份引导（leading）是真的；事情越重大，越需要时间、现实事实和共同体检验。' },
   dyad: { kicker:'DYAD · 30–60 分钟', title:'两个人：把“被理解”变成“被真正聆听”', body:'灵性友谊不是互相指导。稳定关系让一个人的变化有见证者，也让承诺、困惑和反复出现的模式有机会被温柔地指出。', tools:[['practice-covenant.html','灵性友谊','长期、低结构'],['practice-worship-sharing.html','二人式敬拜分享','从静默说与听'],['practice-queries.html','开放问题','避免把建议塞进问题']], boundary:'若双方权力明显不对等，或涉及创伤、危机与专业领域，需要更清楚的边界；“深度”不能成为强迫暴露。' },
   group: { kicker:'SMALL GROUP · 60–120 分钟', title:'5–8 人小组：让结构比带领者更可靠', body:'小组最容易滑回聊天、讨论或一个人主导。敬拜式分享、盟约小组和共读通过稳定规则，把注意力重新放回经验、静默和第三物。', tools:[['practice-worship-sharing.html','敬拜式分享','一次 60 分钟'],['practice-covenant.html','盟约小组','数月承诺'],['practice-queries.html','共读 + Query','文本作为第三物']], boundary:'成员越熟，越需要边界；亲密不能取消保密、pass 的自由和“不替别人解释”的纪律。' },
-  meeting: { kicker:'CORPORATE · 依据议题长度', title:'群体决策：不是把每个人意见相加，而是寻找共同可承担的方向', body:'敬拜式事务会议让事实、分歧、静默和 minute 处在同一辨识过程里。Clerk 不是主席式裁判，而是聚会感受的聆听者和结构守护者。', tools:[['practice-business-meeting.html','敬拜式事务会议','完整流程'],['practice-business-meeting.html','Unity','不是一致意见'],['practice-business-meeting.html','Sense of the Meeting','由 Clerk 尝试命名']], boundary:'信息不足、成员疲惫或权力压力过强时，“暂不决定”可能比勉强形成 unity 更忠实。' },
-  calling: { kicker:'CALLING · 90 分钟到长期陪伴', title:'重大选择与召命：事情越重，支持结构越需要升级', body:'一次澄心会可以帮助清晰，却不能承担数年的服事。Quaker tradition 会根据事情重量，把澄心会、灵性友谊、盟约小组和支持委员会组合起来。', tools:[['practice-clearness.html','澄心会','围绕一个具体问题'],['practice-calling.html','召命辨识','leading / concern / calling'],['practice-faithfulness.html','支持忠实','长期陪伴与问责']], boundary:'医疗、法律、财务和严重心理危机需要专业判断；属灵辨识帮助澄清价值与忠实方向，但不能替代专业服务。' }
+  meeting: { kicker:'CORPORATE · 依据议题长度', title:'群体决策：不是把每个人意见相加，而是寻找共同可承担的方向', body:'敬拜式事务会议让事实、分歧、静默和 minute 处在同一辨识过程里。Clerk 不是主席式裁判，而是守护辨识过程、倾听共同领受的人。', tools:[['practice-business-meeting.html','敬拜式事务会议','完整流程'],['practice-business-meeting.html','合一（Unity）','不是意见完全一致'],['practice-business-meeting.html','聚会共同领受','由 Clerk 尝试表达']], boundary:'信息不足、成员疲惫或权力压力过强时，“暂不决定”可能比勉强形成合一更忠实。' },
+  calling: { kicker:'CALLING · 90 分钟到长期陪伴', title:'重大选择与召命：承担越深，越需要相称而稳定的支持', body:'一次澄心会可以帮助看清一个具体问题，却不能独自承接数年的服事。贵格会传统会根据承担的时间、责任与代价，选择灵性友谊、盟约小组、澄心会或支持委员会等不同支持方式。', tools:[['practice-clearness.html','澄心会','围绕一个具体问题'],['practice-calling.html','召命辨识','引导 / 属灵关切 / 召命'],['practice-faithfulness.html','支持忠实','长期陪伴与问责']], boundary:'医疗、法律、财务和严重心理危机需要专业判断；属灵辨识帮助澄清价值与忠实方向，但不能替代专业服务。' }
 };
 const scenarioPath = document.querySelector('[data-scenario-path]');
 const scenarioDetail = document.querySelector('[data-scenario-detail]');
@@ -601,7 +634,7 @@ if (personIndex && personVisual && !personIndex.querySelector('.person-visual-ca
   if (personVisual.kind === 'image') {
     figure.innerHTML = `<img loading="lazy" src="${personVisual.src}" alt="${personVisual.alt}"><figcaption>${personVisual.caption}</figcaption>`;
   } else if (personVisual.kind === 'kelly') {
-    figure.innerHTML = `<div class="person-concept-art kelly-art" aria-label="Thomas Kelly 双层注意概念图"><span class="outer-label">工作 · 谈话 · 行动</span><span class="inner-label">深层<br>敬拜</span></div><figcaption>Kelly：外层处理现实，深层持续归向 Divine Center</figcaption>`;
+    figure.innerHTML = `<div class="person-concept-art kelly-art" aria-label="Thomas Kelly 两层心智生活概念图"><span class="outer-label">工作 · 谈话 · 行动</span><span class="inner-label">深层<br>敬拜</span></div><figcaption>Kelly：外层处理现实，深层持续归向 Divine Center</figcaption>`;
   } else {
     figure.innerHTML = `<div class="person-concept-art palmer-art" aria-label="Parker Palmer 信任圈与第三物概念图"><i></i><i></i><i></i><i></i><i></i><span>第三物<br><small>共同中心</small></span></div><figcaption>Palmer：不是直奔彼此，而是围绕第三物形成共同中心</figcaption>`;
   }
