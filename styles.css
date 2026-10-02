@@ -902,3 +902,234 @@ a{color:inherit}
   .site-footer{display:block}
   .footer-note{text-align:left}
 }
+
+/* --- Theology system & deep-practice pages --- */
+.theology-system-hero{
+  background:
+    radial-gradient(circle at 78% 36%,rgba(219,172,103,.20),transparent 22%),
+    radial-gradient(circle at 92% 64%,rgba(49,79,64,.11),transparent 28%),
+    linear-gradient(135deg,#f7f1e7 0%,#ece4d5 100%);
+}
+.theology-spine-section{border-bottom:1px solid var(--line)}
+.theology-spine{
+  display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:10px;align-items:stretch;
+  overflow-x:auto;padding:5px 2px 16px
+}
+.theology-spine article{
+  grid-column:span 1;min-width:145px;min-height:210px;padding:22px 18px;
+  border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.62)
+}
+.theology-spine article span,.doctrine-grid span,.spectrum-grid small,.role-orbit small,
+.query-depths small,.support-ladder small,.term-flow small,.spiritual-practice-card.flat small{
+  font-family:ui-sans-serif,system-ui,sans-serif;font-size:9px;letter-spacing:.11em;color:var(--accent)
+}
+.theology-spine article b{display:block;font-size:21px;margin:38px 0 8px}
+.theology-spine article p{font-size:13px;line-height:1.7;color:var(--muted);margin:0}
+.theology-spine>i,.logic-flow>i,.term-flow>i{
+  align-self:center;text-align:center;font-style:normal;color:var(--accent);font-size:19px
+}
+.doctrine-atlas{padding-top:104px}
+.doctrine-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px
+}
+.doctrine-grid a{
+  min-height:230px;padding:28px;border:1px solid var(--line);border-radius:20px;
+  background:rgba(255,253,248,.62);text-decoration:none;color:var(--ink);
+  transition:transform .2s,box-shadow .2s,border-color .2s
+}
+.doctrine-grid a:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#b99b78}
+.doctrine-grid h3{font-size:27px;line-height:1.35;margin:28px 0 10px}
+.doctrine-grid p{color:var(--muted);max-width:600px;margin:0 0 18px}
+.doctrine-grid b{font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;color:var(--accent)}
+.barclay-frame,.diversity-spectrum{border-top:1px solid var(--line)}
+.proposition-ribbon{display:flex;flex-wrap:wrap;gap:8px}
+.proposition-ribbon span{
+  padding:9px 12px;border:1px solid var(--line);border-radius:999px;
+  background:rgba(255,253,248,.65);font-family:ui-sans-serif,system-ui,sans-serif;
+  font-size:11px;color:#505a53
+}
+.source-note{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:var(--muted)}
+.source-note a,.text-link{color:var(--accent);text-decoration:none;font-weight:650}
+.spectrum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.spectrum-grid article{
+  min-height:245px;padding:24px;border:1px solid var(--line);border-radius:18px;
+  background:rgba(255,253,248,.58)
+}
+.spectrum-grid h3{font-size:23px;line-height:1.35;margin:34px 0 10px}
+.spectrum-grid p{font-size:14px;color:var(--muted);margin:0}
+.bridge-practice{padding-top:36px}
+.bridge-panel{
+  padding:46px;border-radius:26px;background:var(--deep);color:white;
+  background-image:radial-gradient(circle at 86% 28%,rgba(228,179,121,.22),transparent 26%)
+}
+.bridge-panel h2{font-size:38px;line-height:1.3;max-width:800px;margin:10px 0 16px}
+.bridge-panel>p:not(.kicker){max-width:780px;color:#d8dfda;margin-bottom:26px}
+
+.logic-flow{
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch;margin:30px 0
+}
+.logic-flow article{
+  min-height:155px;padding:21px;border:1px solid var(--line);border-radius:17px;background:rgba(255,253,248,.56)
+}
+.logic-flow small{font-family:ui-sans-serif,system-ui,sans-serif;font-size:9px;letter-spacing:.1em;color:var(--accent)}
+.logic-flow b{display:block;font-size:19px;margin:25px 0 7px}
+.logic-flow p{font-size:13px!important;color:var(--muted);margin:0!important}
+.process-steps{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:28px 0
+}
+.process-steps article{
+  min-height:195px;padding:22px;border:1px solid var(--line);border-radius:17px;background:rgba(255,253,248,.58)
+}
+.process-steps span{
+  display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--deep);color:#fff;font-family:ui-monospace,monospace;font-size:10px
+}
+.process-steps h3{font-size:19px;margin:30px 0 7px}
+.process-steps p{font-size:13px!important;color:var(--muted);margin:0!important}
+.mini-diagram{
+  position:relative;min-height:440px;max-width:620px;margin:38px auto;
+  border:1px solid var(--line);border-radius:28px;background:rgba(255,253,248,.42);overflow:hidden
+}
+.mini-diagram .ring{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:grid;place-items:start center;border-radius:50%;border:1px solid rgba(138,79,45,.25);
+  padding-top:24px;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px
+}
+.mini-diagram .r1{width:380px;height:380px}
+.mini-diagram .r2{width:290px;height:290px}
+.mini-diagram .r3{width:200px;height:200px}
+.mini-diagram .core{
+  width:112px;height:112px;padding:0;place-items:center;text-align:center;background:var(--deep);
+  border-color:var(--deep);color:white;font-weight:700
+}
+.source-panel-wide{padding-top:40px}
+.source-panel-wide .source-panel{max-width:980px;margin:0 auto}
+
+.practice-detail-hero,.discernment-hero{
+  background:
+    radial-gradient(circle at 81% 46%,rgba(220,174,112,.18),transparent 24%),
+    linear-gradient(135deg,#f8f3e9 0%,#eee6d8 100%)
+}
+.principle-map{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px
+}
+.principle-map.six{grid-template-columns:repeat(3,1fr)}
+.principle-map article{
+  min-height:220px;padding:25px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.6)
+}
+.principle-map article span{
+  font-family:ui-monospace,monospace;font-size:11px;color:var(--accent);letter-spacing:.08em
+}
+.principle-map article b{display:block;font-size:21px;line-height:1.35;margin:38px 0 9px}
+.principle-map article p{font-size:14px;color:var(--muted);margin:0}
+.process-timeline{position:relative;max-width:900px;margin:12px auto 0}
+.process-timeline:before{
+  content:"";position:absolute;left:78px;top:16px;bottom:16px;width:1px;background:var(--line)
+}
+.process-timeline article{
+  position:relative;display:grid;grid-template-columns:58px 1fr;gap:42px;padding:0 0 38px
+}
+.process-timeline article:before{
+  content:"";position:absolute;left:73px;top:8px;width:9px;height:9px;border-radius:50%;
+  background:var(--paper);border:2px solid var(--accent)
+}
+.process-timeline time{
+  font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;font-weight:750;color:var(--accent);padding-top:2px
+}
+.process-timeline h3{font-size:23px;line-height:1.35;margin:0 0 7px}
+.process-timeline p{margin:0;color:var(--muted);font-size:14px}
+.mistake-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px
+}
+.mistake-grid article{
+  min-height:175px;padding:24px;border-top:2px solid #b89070;background:rgba(255,253,248,.48)
+}
+.mistake-grid b{font-size:19px}
+.mistake-grid p{font-size:14px;color:var(--muted);margin:10px 0 0}
+.query-depths{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px
+}
+.query-depths article{
+  min-height:250px;padding:25px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.58)
+}
+.query-depths h3{font-size:23px;line-height:1.35;margin:36px 0 10px}
+.query-depths p{font-size:14px;color:var(--muted);margin:0}
+.rewrite-table{display:grid;gap:12px;max-width:940px}
+.rewrite-table>div{
+  display:grid;grid-template-columns:130px 1fr 36px 1fr;gap:14px;align-items:center;
+  padding:21px 24px;border:1px solid var(--line);border-radius:17px;background:rgba(255,253,248,.58)
+}
+.rewrite-table span{font-family:ui-sans-serif,system-ui,sans-serif;font-size:10px;letter-spacing:.08em;color:var(--accent)}
+.rewrite-table p{margin:0;color:#4d5750;font-size:14px}
+.rewrite-table b{text-align:center;color:var(--accent);font-size:18px}
+.role-orbit{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch
+}
+.role-orbit>div,.role-orbit>article{
+  padding:26px;border:1px solid var(--line);border-radius:19px;background:rgba(255,253,248,.58)
+}
+.role-orbit .role-center{
+  grid-column:1/-1;max-width:720px;justify-self:center;width:100%;text-align:center;
+  background:var(--deep);color:white;border-color:var(--deep)
+}
+.role-orbit b{display:block;font-size:22px;margin:20px 0 8px}
+.role-orbit p{font-size:14px;color:var(--muted);margin:0}
+.role-orbit .role-center p{color:#d8dfda}
+.term-flow{
+  display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:8px;align-items:stretch;
+  overflow-x:auto;padding:4px 2px 16px
+}
+.term-flow article{
+  min-width:140px;padding:21px;border:1px solid var(--line);border-radius:17px;background:rgba(255,253,248,.6)
+}
+.term-flow b{display:block;font-size:18px;margin:27px 0 7px}
+.term-flow p{font-size:13px;color:var(--muted);margin:0}
+.spiritual-practice-card.flat{padding:24px;min-height:175px}
+.spiritual-practice-card.flat h3{margin:0 0 9px}
+.spiritual-practice-card.flat p{font-size:14px;color:var(--muted);margin:0}
+.support-ladder{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0
+}
+.support-ladder article{
+  min-height:235px;padding:26px;border:1px solid var(--line);background:rgba(255,253,248,.58)
+}
+.support-ladder article:first-child{border-radius:18px 0 0 18px}
+.support-ladder article:last-child{border-radius:0 18px 18px 0}
+.support-ladder b{display:block;font-size:21px;line-height:1.35;margin:38px 0 9px}
+.support-ladder p{font-size:14px;color:var(--muted);margin:0}
+
+.source-panel{
+  padding:30px;border:1px solid var(--line);border-radius:19px;background:rgba(255,253,248,.62)
+}
+.source-panel h2{margin-top:8px}
+
+@media(max-width:980px){
+  .theology-spine{grid-template-columns:repeat(7,minmax(145px,1fr))}
+  .theology-spine>i{display:none}
+  .spectrum-grid{grid-template-columns:1fr 1fr}
+  .process-steps{grid-template-columns:1fr 1fr}
+  .principle-map,.query-depths{grid-template-columns:1fr 1fr}
+  .principle-map.six{grid-template-columns:1fr 1fr}
+  .mistake-grid{grid-template-columns:1fr 1fr}
+  .support-ladder{grid-template-columns:1fr 1fr;gap:12px}
+  .support-ladder article,.support-ladder article:first-child,.support-ladder article:last-child{border-radius:17px}
+}
+@media(max-width:680px){
+  .doctrine-grid,.spectrum-grid,.principle-map,.principle-map.six,.query-depths,.mistake-grid,.support-ladder,.role-orbit{grid-template-columns:1fr}
+  .bridge-panel{padding:32px 24px}
+  .bridge-panel h2{font-size:30px}
+  .logic-flow{grid-template-columns:1fr}
+  .logic-flow>i{transform:rotate(90deg)}
+  .process-steps{grid-template-columns:1fr}
+  .process-timeline:before{left:7px}
+  .process-timeline article{grid-template-columns:1fr;gap:5px;padding-left:30px;padding-bottom:32px}
+  .process-timeline article:before{left:2px}
+  .role-orbit .role-center{grid-column:auto}
+  .rewrite-table>div{grid-template-columns:1fr}
+  .rewrite-table b{transform:rotate(90deg)}
+  .mini-diagram{min-height:350px}
+  .mini-diagram .r1{width:300px;height:300px}
+  .mini-diagram .r2{width:230px;height:230px}
+  .mini-diagram .r3{width:165px;height:165px}
+  .mini-diagram .core{width:94px;height:94px}
+}
