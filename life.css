@@ -53,3 +53,73 @@ body[data-page="life.html"] .content-section{padding:40px 0;margin:0}
 @media(max-width:720px){.life-page .continue-grid{grid-template-columns:1fr}.life-page .title-segment{display:inline}.life-page .life-note{padding:20px}.life-page .life-support{padding:18px}.life-page .section-glyph{display:none}}
 @media(prefers-reduced-motion:reduce){.life-page *{scroll-behavior:auto}}
 
+
+/* Life feature: visual reading edition */
+.life-panorama{margin:0 0 54px;overflow:hidden}
+.life-panorama img{display:block;width:100%;height:auto;border-radius:10px}
+.life-panorama figcaption{display:flex;justify-content:space-between;gap:14px;padding:14px 0;color:var(--muted);font-size:14px}
+.life-panorama figcaption span{font-size:12px}
+.life-atlas{padding:32px 0 50px;border-bottom:1px solid var(--line)}
+.life-atlas h2{font-size:clamp(26px,3vw,38px);line-height:1.55;margin:12px 0}
+.atlas-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
+.atlas-card{padding:24px 20px;background:var(--white);border:1px solid var(--line);border-radius:10px;text-decoration:none;display:grid;gap:10px;transition:background .2s,transform .2s}
+.atlas-card:hover{background:var(--paper2);transform:translateY(-3px)}
+.atlas-icon{width:44px;height:44px;color:var(--accent)}
+.atlas-icon svg,.chapter-symbol svg,.role-symbol svg,.role-map-node svg{display:block;width:100%;height:100%}
+.atlas-card small{font-size:12px;color:var(--muted)}
+.atlas-card b{font-size:19px;font-weight:500}
+.visual-caption{font-size:13px;color:var(--muted);line-height:1.8}
+.life-phase-banner{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;margin:50px 0 18px;padding:20px;background:var(--paper2);border-radius:12px}
+.phase-art{height:260px;border-radius:8px;background-image:url("life-community.webp");background-repeat:no-repeat;background-size:300% auto}
+.phase-left{background-position:left 58%}.phase-center{background-position:center 58%}.phase-right{background-position:right 58%}
+.life-phase-banner figcaption{padding:16px}
+.life-phase-banner small{color:var(--accent);font-size:13px}
+.life-phase-banner h3{font-size:clamp(24px,2.6vw,32px);line-height:1.7;font-weight:500;margin:14px 0}
+.life-phase-banner p{font-size:12px;color:var(--muted)}
+.chapter-symbol{width:46px;min-width:46px;height:46px;color:var(--accent);margin-top:8px}
+.life-chapter-head{align-items:center}
+.life-chapter-head .life-number{font-size:25px;min-width:30px}
+.life-story{margin-top:12px;border-radius:10px}
+.chapter-depth{padding-top:10px}
+.chapter-depth>summary{cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:12px 0;color:var(--ink);font-size:15px;list-style:none}
+.chapter-depth>summary::after{content:"＋";color:var(--accent)}
+.chapter-depth[open]>summary::after{content:"−"}
+.chapter-depth>summary span{margin-left:auto;font-size:12px;color:var(--muted)}
+.chapter-depth[open]>summary span{display:none}
+.chapter-depth .life-columns{padding-top:24px}
+.role-map{margin:30px 0 12px;border:1px solid var(--line);border-radius:12px;padding:30px;background:var(--paper2)}
+.role-map-center{max-width:400px;text-align:center;margin:0 auto 24px;padding:22px;background:var(--white);border:1px solid var(--accent);border-radius:100px}
+.role-map-center span{display:block;color:var(--accent);font-size:12px}
+.role-map-center b{font-size:22px;font-weight:500}
+.role-map-center p{font-size:14px;margin:8px 0}
+.role-map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.role-map-node{display:grid;grid-template-columns:44px 1fr;gap:8px 16px;background:var(--white);border:1px solid var(--line);border-radius:8px;padding:20px;text-decoration:none}
+.role-map-node span{grid-row:span 2;width:44px;height:44px;color:var(--accent)}
+.role-map-node b{font-size:20px;font-weight:500}.role-map-node p{font-size:14px;margin:0;color:var(--muted)}
+.role-filters{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 12px}
+.role-filters button{border:1px solid var(--line);border-radius:24px;padding:8px 16px;background:var(--white);color:var(--ink);cursor:pointer;font-size:14px}
+.role-filters button[aria-pressed="true"]{background:var(--deep);color:var(--paper)}
+.role-filter-status{font-size:13px;color:var(--muted)}
+.role-symbol{display:block;width:36px;height:36px;color:var(--accent);margin-bottom:16px}
+.life-role{border-radius:10px}.life-role[hidden]{display:none}
+.handover-map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:28px 0 16px}
+.handover-map a{border-top:3px solid var(--accent);background:var(--paper2);padding:18px;border-radius:0 0 8px 8px;display:grid;gap:10px;text-decoration:none}
+.handover-map small{font-size:26px;font-style:italic;color:var(--accent)}
+.handover-map b{font-size:19px;font-weight:500}.handover-map span{font-size:13px;color:var(--muted)}
+.support-map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:26px 0 14px}
+.support-map article{background:var(--paper2);padding:22px;border-radius:10px}
+.support-map span{display:block;font-size:12px;color:var(--accent);margin-bottom:12px}
+.support-map b{font-size:20px;font-weight:500}.support-map p{font-size:14px;color:var(--muted)}
+@media(max-width:900px){.atlas-grid,.handover-map,.support-map{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+.life-panorama{margin-bottom:26px}.life-panorama figcaption{display:block;font-size:12px}.life-panorama figcaption span{display:block;margin-top:6px}
+.atlas-grid{gap:10px}.atlas-card{padding:17px 13px}.atlas-card b{font-size:17px}.atlas-icon{width:34px;height:34px}
+.life-phase-banner{grid-template-columns:1fr;gap:0;padding:12px;margin-top:34px}.phase-art{height:230px;background-size:300% auto}
+.life-phase-banner figcaption{padding:14px}.life-phase-banner h3{font-size:23px;margin:8px 0}
+.chapter-symbol{width:32px;min-width:32px;height:32px}.life-chapter-head .life-number{display:none}
+.chapter-depth>summary{font-size:14px}.chapter-depth>summary span{display:none}
+.role-map{padding:16px}.role-map-center{border-radius:16px;padding:18px}.role-map-center b{font-size:19px}
+.role-map-grid{grid-template-columns:1fr}.role-map-node b{font-size:19px}
+.handover-map a,.support-map article{padding:15px}.handover-map b,.support-map b{font-size:17px}
+}
+@media print{.role-filters,.role-filter-status{display:none}.life-role[hidden]{display:block}.chapter-depth>.life-columns{display:grid!important}.phase-art{-webkit-print-color-adjust:exact;print-color-adjust:exact}.life-phase-banner{break-inside:avoid}}
