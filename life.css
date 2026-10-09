@@ -1,0 +1,55 @@
+body[data-page="life.html"] .life-wrap{max-width:1240px;margin:auto;padding:36px clamp(22px,5vw,72px) 70px}
+.life-lead{display:grid;grid-template-columns:1.15fr 1fr;gap:34px;align-items:center;padding:26px 0 42px}
+.life-lead p{font-size:17px;line-height:1.95}.life-note{padding:22px 26px;background:var(--white);border-left:3px solid var(--gold);margin:24px 0}
+.life-note p{margin:8px 0}.life-map{margin:0;background:var(--paper2);padding:20px;border:1px solid var(--line);border-radius:160px 160px 12px 12px}
+.life-map svg{display:block;width:100%;height:auto}.life-map figcaption{text-align:center;font-size:13px;color:var(--moss);margin-top:10px}
+.life-jumps{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}.life-jumps a{border:1px solid var(--line);border-radius:30px;padding:7px 14px;font-size:14px;background:var(--white)}
+.life-jumps a:hover,.life-jumps a:focus-visible{border-color:var(--moss);background:var(--paper2)}
+.life-chapter{padding:30px 0 36px;border-top:1px solid var(--line);scroll-margin-top:110px}
+.life-chapter-head{display:flex;align-items:flex-start;gap:18px}.life-number{font:italic 38px/1.3 var(--serif);color:var(--gold);min-width:50px}
+.life-chapter-head small{color:var(--moss);font-size:13px}.life-chapter h3{font:500 clamp(24px,2.6vw,34px)/1.5 var(--serif);margin:6px 0 20px}
+.life-story{font-family:var(--serif);font-size:19px;line-height:2;background:var(--paper2);padding:24px 28px;border-radius:4px;margin:0 0 22px}
+.life-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px 30px}.life-columns h4{margin:0;color:var(--moss);font-size:14px}.life-columns p{margin:8px 0 18px;line-height:1.95}
+.life-query{border-left:2px solid var(--gold);padding:8px 18px;margin:20px 0;font-family:var(--serif);font-size:18px}
+.life-ref{font-size:13px;color:var(--moss)}.life-ref a{text-decoration:underline;text-underline-offset:4px}
+.life-roles{display:grid;grid-template-columns:1fr 1fr;gap:16px}.life-role{padding:23px;background:var(--white);border:1px solid var(--line)}
+.life-role>small{font-size:12px;color:var(--moss)}.life-role h3{font:500 24px/1.5 var(--serif);margin:6px 0 14px}.life-role p{line-height:1.9}
+.life-role details{border-top:1px solid var(--line);padding-top:12px}.life-role summary{cursor:pointer;font-size:14px;color:var(--moss)}.life-role details p{font-size:14px}
+.life-process{list-style:none;padding:0;counter-reset:life-process;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.life-process li{counter-increment:life-process;border:1px solid var(--line);padding:22px;background:var(--white)}
+.life-process li:before{content:counter(life-process,decimal-leading-zero);display:block;color:var(--gold);font:italic 30px var(--serif);margin-bottom:10px}
+.life-process b{font-size:19px;font-family:var(--serif)}.life-process p{margin-bottom:0}
+.life-switch{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.life-switch button{padding:10px 18px;border:1px solid var(--moss);background:transparent;color:var(--ink);cursor:pointer;border-radius:28px}
+.life-switch button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.life-support{border:1px solid var(--line);padding:24px;margin:16px 0;background:var(--white)}
+.life-support summary{cursor:pointer;font:500 22px/1.5 var(--serif)}.life-support summary small{display:block;font:14px/1.8 var(--sans);color:var(--moss);margin:7px 0}
+.life-view{color:var(--moss);border-top:1px solid var(--line);padding-top:16px}
+.life-history{display:grid;gap:14px;border-left:2px solid var(--gold);padding-left:22px}.life-history article{padding:12px 0}
+.life-history h3{font:500 23px/1.5 var(--serif);margin:0}.life-sources{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.life-sources article{padding:20px;border:1px solid var(--line);scroll-margin-top:110px}
+.life-sources a{text-decoration:underline;text-underline-offset:4px}.life-sources p{font-size:14px;color:var(--moss);margin-bottom:0}
+.life-template{display:grid;grid-template-columns:1fr 1fr;gap:16px}.life-template div{border-top:1px solid var(--line);padding:18px 0}
+body[data-page="life.html"] .content-section{padding:40px 0;margin:0}
+@media(max-width:720px){.life-lead,.life-columns,.life-roles,.life-process,.life-sources,.life-template{grid-template-columns:1fr}.life-map{max-width:380px;margin:auto}.life-story{padding:20px;font-size:18px}.life-number{min-width:40px;font-size:32px}.life-chapter-head{gap:12px}.life-role h3{font-size:23px}}
+@media print{.life-switch{display:none}.life-wrap details{display:block}.life-map{max-width:300px}.life-roles,.life-sources{grid-template-columns:1fr}.life-chapter{break-inside:auto}}
+
+.life-page{--paper2:var(--paper-2);--gold:var(--accent);--moss:var(--muted);--serif:"Noto Serif SC","Songti SC","STSong",serif;--sans:ui-sans-serif,system-ui,sans-serif}
+.life-page .hero-meta{color:var(--muted);font-size:14px}
+.life-page .section-heading-row{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.life-page .section-eyebrow{color:var(--accent);font-size:13px;letter-spacing:.1em}
+.life-page .content-section h2{font-size:clamp(25px,3.2vw,38px);line-height:1.55;margin:12px 0 24px}
+.life-page .section-glyph{width:42px;min-width:42px;height:42px;color:var(--accent)}
+.life-page .section-glyph svg{width:100%;height:100%;fill:currentColor;stroke:currentColor;stroke-width:1}
+.life-page .title-line{display:block;text-wrap:balance}
+.life-page .title-segment{display:inline-block;max-width:100%}
+.life-page .title-segment.mobile-fluid{display:inline}
+.life-page .continue-reading{max-width:1180px;margin:auto;padding:40px 24px 70px;border-top:1px solid var(--line)}
+.life-page .continue-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.life-page .continue-grid a{display:grid;gap:8px;padding:24px;border:1px solid var(--line);border-radius:var(--radius);text-decoration:none}
+.life-page .continue-grid span{font-size:13px;color:var(--muted)}
+.life-page a:focus-visible,.life-page button:focus-visible,.life-page summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.life-page [id]{scroll-margin-top:100px}
+@media(min-width:861px){.site-nav{gap:clamp(10px,1.4vw,22px)}.site-nav a{white-space:nowrap}}
+@media(max-width:720px){.life-page .continue-grid{grid-template-columns:1fr}.life-page .title-segment{display:inline}.life-page .life-note{padding:20px}.life-page .life-support{padding:18px}.life-page .section-glyph{display:none}}
+@media(prefers-reduced-motion:reduce){.life-page *{scroll-behavior:auto}}
+
